@@ -28,10 +28,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const BaseProblemSchema = new mongoose.Schema({
-    idProblem: {
-        type: String,
-        required: true
-    },
     contest: {
         type: String,
         required: false
@@ -47,12 +43,15 @@ const BaseProblemSchema = new mongoose.Schema({
         require : true
     },
 
+    // Type : 1 Trắc nghiệm
+    // Type : 2 Trắc nghiệm đúng sai
+    // Type : 3 Trả lời ngắn
+    // Type : 4 Lập trình
     Type : {
         type : Number,
         require : true
     }
 });
-
 
 const MultipleChoiceProblemSchema = new mongoose.Schema({
     Question : {
@@ -102,18 +101,18 @@ const CodingproblemSchema = new mongoose.Schema({
 })
 
 const contestSchema = new mongoose.Schema({
-    idContest : {
-        type : Number,
-        require : true
-    },
-
     Type : {
         type : Number,
         require : true
     },
 
+    nameContest : {
+        type : String,
+        require : true
+    },
+
     IdProblems : {
-        type : [Number],
+        type : [String],
         require : true
     }
 });
