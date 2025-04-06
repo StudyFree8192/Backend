@@ -27,7 +27,7 @@ router.post("/:id", async (req, res) => {
 
     if (type == "problem") {
         const problemData = await database.ProblemCollection.find({_id : id});
-        res.send(problemData);
+        res.send([problemData, problemData[0].name]);
     }
     else {
         const ContestData = await database.ContestCollection.find({_id : id});
@@ -37,7 +37,7 @@ router.post("/:id", async (req, res) => {
             const problem = await database.ProblemCollection.find({ _id: id });
             Contest.push(problem[0]);
         }
-        res.send(Contest);
+        res.send([Contest, ContestData[0].nameContest]);
     }
     
 });

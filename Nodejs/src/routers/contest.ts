@@ -8,13 +8,6 @@ router.post("/:id", async (req, res) => {
     const ContestData = await database.ContestCollection.find({_id : id});
 
     let Contest = [];
-    // for (let i = 0; i < ContestData.length; i++) {
-    //     let IdProblem = ContestData[0].IdProblems[i];
-    //     const Problem = await database.ProblemCollection.find({_id : IdProblem});
-
-    //     console.log(Problem);
-    // }
-
     const problems = ContestData[0].IdProblems;
 
     for await (const id of problems) {
