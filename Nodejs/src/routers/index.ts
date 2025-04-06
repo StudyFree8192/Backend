@@ -1,13 +1,11 @@
 import { Router } from "express";
 import auth from "./auth";
 import database from "../api/database";
-import problem from "./problem";
-import contest from "./contest";
+import problems from "./problems";
 
 const router = Router();
 router.use("/auth", auth);
-router.use("/problem", problem);
-router.use("/contest", contest);
+router.use("/problems", problems);
 
 
 export default router;

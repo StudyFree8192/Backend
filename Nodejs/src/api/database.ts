@@ -106,6 +106,11 @@ const contestSchema = new mongoose.Schema({
         require : true
     },
 
+    subject : {
+        type : String,
+        require : true
+    },
+
     nameContest : {
         type : String,
         require : true

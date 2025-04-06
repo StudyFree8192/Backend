@@ -16,6 +16,7 @@ app.use("/", routers);
 // database.ContestCollection.insertOne({
 //     Type : 1,
 //     nameContest : "Giới từ",
+//     subject : "English",
 //     IdProblems : [
 //         "67f1193306a0ca050e9e2f4b",
 //         "67f1eb0cf3bb20ddd96efc2d",
