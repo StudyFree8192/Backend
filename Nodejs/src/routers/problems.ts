@@ -23,10 +23,9 @@ router.post("/", async (req, res) => {
 
 router.post("/create", async (req, res) => {
     const {questionList, nameQuestion} = req.body;
-
     for (let index = 0; index < questionList.length; index++) {
-        switch (questionList[index].type) {
-            case 1:
+        switch (Number(questionList[index].type)) {
+            case 1: {
                 database.MultipleChoiceProblemCollection.insertOne({
                     name : nameQuestion,
                     Type : 1,
@@ -34,8 +33,21 @@ router.post("/create", async (req, res) => {
                     Options : questionList[index].options,
                     answer : questionList[index].answer,
                     subject : "không biết"
-                })
+                });
                 break;
+            }
+            
+            case 2: {
+                database.MultipleChoiceProblemCollection.insertOne({
+                    name : nameQuestion,
+                    Type : 2,
+                    Question : questionList[index].question,
+                    Options : questionList[index].options,
+                    answer : questionList[index].answer.split("-").map(x => x == "True" ? 1 : 0),
+                    subject : "không biết"
+                });
+                break;
+            }
         } 
     }
 
