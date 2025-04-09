@@ -21,6 +21,29 @@ router.post("/", async (req, res) => {
     
 });
 
+router.post("/create", async (req, res) => {
+    const {questionList, nameQuestion} = req.body;
+
+    for (let index = 0; index < questionList.length; index++) {
+        switch (questionList[index].type) {
+            case 1:
+                database.MultipleChoiceProblemCollection.insertOne({
+                    name : nameQuestion,
+                    Type : 1,
+                    Question : questionList[index].question,
+                    Options : questionList[index].options,
+                    answer : questionList[index].answer,
+                    subject : "không biết"
+                })
+                break;
+        } 
+    }
+
+    res.send({
+        add : true
+    });
+})
+
 router.post("/:id", async (req, res) => {    
     const id = req.params.id;
     const {type} = req.body;
@@ -41,5 +64,7 @@ router.post("/:id", async (req, res) => {
     }
     
 });
+
+
 
 export default router;

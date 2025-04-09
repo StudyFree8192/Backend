@@ -1,6 +1,5 @@
 import { Router } from "express";
 import auth from "./auth";
-import database from "../api/database";
 import problems from "./problems";
 
 const router = Router();
