@@ -22,11 +22,12 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-    const {questionList, nameQuestion} = req.body;
+    const {questionList, nameQuestion, type} = req.body;
+    let ContestList : any[] = [];
     for (let index = 0; index < questionList.length; index++) {
         switch (Number(questionList[index].type)) {
             case 1: {
-                database.MultipleChoiceProblemCollection.insertOne({
+                const result = database.MultipleChoiceProblemCollection.insertOne({
                     name : nameQuestion,
                     Type : 1,
                     Question : questionList[index].question,
@@ -34,11 +35,14 @@ router.post("/create", async (req, res) => {
                     answer : questionList[index].answer,
                     subject : "không biết"
                 });
+
+                const newId = (await result)._id;
+                if (type == "Contest") ContestList.push(newId);
                 break;
             }
             
             case 2: {
-                database.MultipleChoiceProblemCollection.insertOne({
+                const result = database.MultipleChoiceProblemCollection.insertOne({
                     name : nameQuestion,
                     Type : 2,
                     Question : questionList[index].question,
@@ -46,10 +50,32 @@ router.post("/create", async (req, res) => {
                     answer : questionList[index].answer.split("-").map(x => x == "True" ? 1 : 0),
                     subject : "không biết"
                 });
+                const newId = (await result)._id;
+                if (type == "Contest") ContestList.push(newId);
+                break;
+            }
+
+            case 3: {
+                const result = database.ShortAnswerCollection.insertOne({
+                    name : nameQuestion,
+                    Type : 3,
+                    Question : questionList[index].question,
+                    answer : questionList[index].answer,
+                    subject : "không biết"
+                });
+                const newId = (await result)._id;
+                if (type == "Contest") ContestList.push(newId);
                 break;
             }
         } 
     }
+
+    if (type == "Contest") await database.ContestCollection.insertOne({
+        Type : 1,
+        subject : "Không biết",
+        nameContest : nameQuestion,
+        IdProblems : ContestList
+    })
 
     res.send({
         add : true
